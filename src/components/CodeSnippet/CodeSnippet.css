@@ -1,3 +1,18 @@
 .Container {
-  white-space: pre;
+    white-space: pre;
+}
+
+.Line {
+    height: 16px;
+    display: flex;
+    font-family: monospace;
+}
+
+.LineNumber {
+    text-align: right;
+    user-select: none;
+}
+
+.LineCode {
+    margin: 0;
 }
