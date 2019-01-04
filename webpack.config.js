@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+
 module.exports = {
   entry: './src/index.tsx',
   devtool: 'inline-source-map',
@@ -14,6 +15,7 @@ module.exports = {
     ]
   },
   resolve: {
+    modules: ['src', 'node_modules'],
     extensions: ['.tsx', '.ts', '.js']
   },
   output: {
@@ -22,6 +24,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ hash: true, template: './src/templates/index.html' }),
-    new UglifyJsPlugin()
+    new TerserPlugin({
+      parallel: true,
+      sourceMap: true,
+      terserOptions: {
+        ecma: 8,
+      },
+    }),
   ]
 }
