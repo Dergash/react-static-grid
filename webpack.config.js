@@ -1,8 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -14,13 +14,14 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts']
+    extensions: ['.tsx', '.ts', '.js']
   },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
-    new HtmlWebpackPlugin({ hash: true, template: './src/templates/index.html' })
+    new HtmlWebpackPlugin({ hash: true, template: './src/templates/index.html' }),
+    new UglifyJsPlugin()
   ]
 }
