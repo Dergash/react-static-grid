@@ -2,16 +2,18 @@ import * as React from 'react'
 import * as styles from './CodeSnippet.css'
 
 interface ICodeSnippetProps {
-    editable?: boolean,
     code: string
 }
 
 function CodeSnippet(props: ICodeSnippetProps) {
     const lines = props.code.split('\n')
     const lineNumberWidth = getLineNumberWidth(lines.length)
+
     return (
         <div className={styles.Container}>
-            {lines.map((line, index) =>
+            { lines
+            .filter((line, index) => (index === lines.length - 1 && !line) === false)
+            .map((line, index) =>
                 <div className={styles.Line}>
                     <div className={styles.LineNumber} style={lineNumberWidth}>
                         {index}
