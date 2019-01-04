@@ -17,6 +17,7 @@
 
 .LineCode {
     margin: 0;
+    padding-left: 24px;
 }
 
 .LineCode::selection {
