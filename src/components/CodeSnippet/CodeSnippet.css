@@ -1,5 +1,7 @@
 .Container {
     white-space: pre;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
 }
 
 .Line {
@@ -15,4 +17,9 @@
 
 .LineCode {
     margin: 0;
+}
+
+.LineCode::selection {
+    /* Chrome meddle with color when alpha channel > 255/256 */
+    background-color: rgba(38, 79, 120, 0.996);
 }
