@@ -1,17 +1,14 @@
 import * as React from 'react'
+import * as styles from './CodeSnippet.css'
 
 interface ICodeSnippetProps {
   code: string
 }
 
-const style = {
-  whiteSpace: 'pre'
-}
-
 function CodeSnippet(props: ICodeSnippetProps) {
   const lines = props.code.split('\n')
   return (
-    <div contentEditable style={style}>
+    <div contentEditable className={styles.Container}>
         {lines.map(line => <div>{line}</div>)}
     </div>
   )
