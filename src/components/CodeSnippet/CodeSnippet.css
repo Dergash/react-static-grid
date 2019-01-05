@@ -1,7 +1,7 @@
 .Container {
     white-space: pre;
     background-color: #1e1e1e;
-    color: #e0e0e0;
+    color: #d4d4d4;
 }
 
 .Line {
@@ -13,6 +13,7 @@
 .LineNumber {
     text-align: right;
     user-select: none;
+    color: #4a4a4a;
 }
 
 .LineCode {
@@ -23,4 +24,20 @@
 .LineCode::selection {
     /* Chrome meddle with color when alpha channel > 255/256 */
     background-color: rgba(38, 79, 120, 0.996);
+}
+
+.Control {
+    color: #C586C0;
+}
+
+.Entity {
+    color: #569cd6; 
+}
+
+.String {
+    color: #ce9178;
+}
+
+.Comment {
+    color: #608b4e;
 }
