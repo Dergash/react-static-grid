@@ -2,6 +2,8 @@
     white-space: pre;
     background-color: #1e1e1e;
     color: #d4d4d4;
+    overflow: auto;
+    max-height: 400px; /* TODO: customize */
 }
 
 .Line {
