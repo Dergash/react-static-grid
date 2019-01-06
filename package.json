@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "lint": "yarn run tslint -c tslint.json 'src/**/*.ts' 'src/**/*.tsx'",
+    "lint": "yarn run tslint -c tslint.js 'src/**/*.ts' 'src/**/*.tsx' '*.js",
     "prebuild": "yarn run lint",
     "build": "node ./node_modules/webpack/bin/webpack.js -p"
   },
