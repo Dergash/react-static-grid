@@ -1,4 +1,8 @@
-export type ITokenType = 'text' | 'entity' | 'control' | 'string' | 'type' | 'comment'
+// TODO: Read something about parsers
+
+export type ITokenType = 'unknown' | 'entity' | 'control'
+    | 'string' | 'stringEncloser' | 'whitespace'
+    | 'comment' | string
 
 export interface ILineToken {
     type: ITokenType,
@@ -20,8 +24,6 @@ const controls = [
 
 const stringSeparators = ['\'', '\"', '\`']
 
-const spaceToken: ILineToken = { type: 'text', text: ' ' }
-
 export function splitLineToTokens(line: string) {
     let isComment = false
     let isString = false
@@ -33,15 +35,49 @@ export function splitLineToTokens(line: string) {
         if (isComment) {
             type = 'comment'
         }
-        if (type === 'string') {
-            isString = !isString
+
+        if (type === 'whitespace') {
+            if (acc[acc.length - 1] && acc[acc.length - 1].type === 'whitespace') {
+                acc[acc.length - 1].text += ' '
+            } else {
+                acc.push({ type: 'whitespace', text: ' ' })
+            }
         }
-        if (isString) {
-            type = 'string'
+        const subTokens: ILineToken[] = []
+        if (type === 'stringEncloser') {
+            const wordTokens = splitWordToTokens(word)
+            wordTokens.forEach(wordToken => {
+                const prev = subTokens[subTokens.length - 1]
+                if (isString && !prev) {
+                    acc[acc.length - 1].text += wordToken.text
+                    acc[acc.length - 1].type = wordToken.type === 'stringEncloser'
+                        ? 'string'
+                        : acc[acc.length - 1].type
+                } else if (isString && prev) {
+                    prev.text += wordToken.text
+                    prev.type = wordToken.type === 'stringEncloser'
+                        ? 'string'
+                        : prev.type
+                } else {
+                    subTokens.push(wordToken)
+                }
+                if (wordToken.type === 'stringEncloser') {
+                    isString = !isString
+                }
+            })
+            acc = [ ...acc, ...subTokens ]
+        } else if (!isString && word) {
+            acc.push({ type, text: word })
         }
-        acc.push({ type, text: word })
-        if (index !== line.length - 1) {
-            acc.push(spaceToken)
+        if (isString && type !== 'stringEncloser') {
+            acc[acc.length - 1].text += word
+        }
+        if (index !== line.length - 1 && type !== 'whitespace') {
+            if (isString) {
+                acc[acc.length - 1].text += ' '
+            } else {
+                acc.push({ type: 'whitespace', text: ' ' })
+            }
         }
         return acc
     }, [])
@@ -49,37 +85,35 @@ export function splitLineToTokens(line: string) {
 }
 
 export function splitWordToTokens(word: string) {
-    const tokens = [{ type: 'text', text: '' }]
-    let index = 0
-    let isString = false
+    const tokens: ILineToken[] = [{ type: 'unknown', text: '' }]
     const chars = [ ...word ]
-    chars.forEach((char) => {
-        if (stringSeparators.includes(char)) { // TODO: should match specific open/close pair
-            index++
-            isString = !isString
-        }
-        if (tokens.length - 1 !== index) {
-            tokens.push({ type: isString ? 'string' : 'text', text: char })
+    chars.forEach(char => {
+        if (stringSeparators.includes(char)) {
+            tokens.push({ type: 'stringEncloser', text: char })
+            tokens.push({ type: 'unknown', text: '' })
         } else {
-            tokens[index].text += char
+            tokens[tokens.length - 1].text += char
         }
     })
-    return tokens
+    return tokens.filter(token => token.text)
 }
 
 function getTokenType(word: string) {
-    let type: ITokenType = 'text'
+    let type: ITokenType = 'unknown'
     if (entities.includes(word)) {
         type = 'entity'
     }
     if (controls.includes(word)) {
         type = 'control'
     }
-    if (stringSeparators.includes(word[0]) && stringSeparators.includes(word[word.length - 1])) {
-        type = 'string'
+    if ([...word].some(char => stringSeparators.includes(char))) {
+        type = 'stringEncloser'
     }
     if (word.startsWith('//') || word.startsWith('/*')) {
         type = 'comment'
+    }
+    if (word === '' || word === ' ') {
+        type = 'whitespace'
     }
     return type
 }

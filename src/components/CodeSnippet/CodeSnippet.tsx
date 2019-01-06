@@ -48,13 +48,10 @@ function renderLine(line: string) {
         if (token.type === 'comment') {
             return <span className={styles.Comment}>{token.text}</span>
         }
-        const wordTokens = splitWordToTokens(token.text)
-        return wordTokens.map(wordToken => {
-            if (wordToken.type === 'string') {
-                return <span className={styles.String}>{wordToken.text}</span>
-            }
-            return wordToken.text
-        })
+        if (token.type === 'string') {
+            return <span className={styles.String}>{token.text}</span>
+        }
+        return token.text
     })
 }
 
