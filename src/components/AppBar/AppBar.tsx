@@ -1,5 +1,7 @@
 import * as React from 'react'
 import * as styles from './AppBar.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 interface IAppBarProps {
     color?: string,
@@ -12,7 +14,7 @@ function AppBar(props: IAppBarProps) {
             className={styles.Container}
             style={{ backgroundColor: props.color || 'transparent'}}
         >
-            <div className={styles.Navigation} />
+            <FontAwesomeIcon icon={faBars} className={styles.Navigation} />
             <h1 className={styles.Title}>
                 {props.title}
             </h1>
