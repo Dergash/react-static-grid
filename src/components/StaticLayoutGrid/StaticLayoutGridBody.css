@@ -1,0 +1,32 @@
+.Container {
+    color: #d4d4d4;
+}
+
+.Table {
+    width: 100%;
+    table-layout: fixed;
+    border: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.Cell {
+    text-align: left;
+    border: 1px solid rgb(57, 57, 57);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.Row {
+    height: 48px;
+}
+
+.Label {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
