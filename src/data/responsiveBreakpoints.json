@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "Breakpoint Range (dp)": "0 – 359",
+            "Portrait": "small handset",
+            "Landscape": "",
+            "Window": "xsmall",
+            "Columns": 4,
+            "Margins / Gutters": 16
+        },
+        {
+            "Breakpoint Range (dp)": "600 – 719",
+            "Portrait": "small tablet",
+            "Landscape": "medium handset",
+            "Window": "small",
+            "Columns": 8,
+            "Margins / Gutters": 16
+        },
+        {
+            "Breakpoint Range (dp)": "1024 – 1279",
+            "Portrait": "",
+            "Landscape": "large tablet",
+            "Window": "medium",
+            "Columns": 12,
+            "Margins / Gutters": 24
+        },
+        {
+            "Breakpoint Range (dp)": "1440 – 1599",
+            "Portrait": "",
+            "Landscape": "",
+            "Window": "large",
+            "Columns": 12,
+            "Margins / Gutters": 24
+        },
+        {
+            "Breakpoint Range (dp)": "1920 +",
+            "Portrait": "",
+            "Landscape": "",
+            "Window": "xlarge",
+            "Columns": 12,
+            "Margins / Gutters": 24
+        }
+    ]
+}

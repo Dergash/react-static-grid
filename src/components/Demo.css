@@ -26,3 +26,12 @@ body {
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+.Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 36px;
+    margin-left: 24px;
+    margin-right: 24px;
+    overflow: auto;
+}
