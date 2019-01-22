@@ -13,6 +13,7 @@ const rules = {
     'no-var-requires': false,
     'no-console': false,
     'object-literal-sort-keys': false,
+    'no-trailing-whitespace': [true, 'ignore-jsdoc'],
 }
 
 module.exports = {

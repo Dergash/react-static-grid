@@ -1,5 +1,5 @@
 declare module '*.css' {
-    const styles: any
+    const styles: { [className: string]: string }
     export = styles
 }
 
