@@ -8,7 +8,6 @@ interface IScrollBarProps {
 }
 
 interface IScrollBarInstance {
-    readonly props: IScrollBarProps,
     thumb: React.MutableRefObject<HTMLDivElement>,
     anchorPercentage: number,
     percentage: number,
@@ -26,20 +25,24 @@ function ScrollBar(props: IScrollBarProps) {
     )
     const thumb = React.useRef<HTMLDivElement>(null)
     const scrollbar = React.useRef<IScrollBarInstance>({
-        props, thumb,
+        thumb,
         anchorPercentage: 0, percentage: 0,
         minPosition: 0, maxPosition: 0
     })
     const instance = scrollbar.current
     React.useEffect(() => {
         if (thumb.current) {
-            instance.minPosition = thumb.current.parentElement.offsetTop
-            instance.maxPosition = instance.minPosition + thumb.current.parentElement.clientHeight - props.size
+            const dimensions = thumb.current.parentElement.getBoundingClientRect()
+            instance.minPosition = props.axis === 'x'
+                ? dimensions.left
+                : dimensions.top
+            instance.maxPosition = instance.minPosition - props.size
+                + (props.axis === 'x' ? dimensions.width : dimensions.height)
         }
     }, [thumb.current, props.size])
     const handleMouseMove = React.useCallback((event: MouseEvent) => {
-        handleMove(event, instance)
-    }, [])
+        handleMove(event, instance, props)
+    }, [props.size])
     const handleMouseUp = (event: MouseEvent) => {
         toggleBrowserSelection(false)
         window.removeEventListener('mousemove', handleMouseMove, true)
@@ -56,26 +59,28 @@ function ScrollBar(props: IScrollBarProps) {
             const dragPosition = props.axis === 'x' ? event.clientX : event.clientY
             const thumbPositionPx = instance.percentage * (instance.maxPosition - instance.minPosition)
             instance.anchorPercentage = (dragPosition - instance.minPosition - thumbPositionPx) / props.size
-        }, [])}
+            console.log(instance.anchorPercentage)
+        }, [props])}
     />
 }
 
-function handleMove(event: MouseEvent, instance: IScrollBarInstance) {
-    const positionPx = instance.props.axis === 'x' ? event.clientX : event.clientY
-    const anchorDelta = (instance.props.size * instance.anchorPercentage)
+function handleMove(event: MouseEvent, instance: IScrollBarInstance, props: IScrollBarProps) {
+    const anchorDelta = (props.size * instance.anchorPercentage)
+    const positionPx = props.axis === 'x' ? event.clientX : event.clientY - anchorDelta
     const availablePx = (instance.maxPosition - instance.minPosition)
     const percentage = (positionPx - instance.minPosition) / availablePx
-    setPosition(percentage, instance)
+    setPosition(percentage, instance, props)
 }
 
-function setPosition(percentage: number, instance: IScrollBarInstance) {
+function setPosition(percentage: number, instance: IScrollBarInstance, props: IScrollBarProps) {
     const availablePx = instance.maxPosition - instance.minPosition
     const limitedPercentage = percentage < 0
         ? 0
         : percentage > 1
             ? 1
             : percentage
-    instance.thumb.current.style.transform = instance.props.axis === 'x'
+    instance.percentage = limitedPercentage
+    instance.thumb.current.style.transform = props.axis === 'x'
             ? `translate3d(${limitedPercentage * availablePx}px, 0px, 0px)`
             : `translate3d(0px, ${limitedPercentage * availablePx}px, 0px)`
 }
