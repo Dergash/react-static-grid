@@ -29,15 +29,22 @@
   version "15.5.8"
   resolved "http://nexus.phoenixit.ru/repository/yarn-registry/@types/prop-types/-/prop-types-15.5.8.tgz#8ae4e0ea205fe95c3901a5a1df7f66495e3a56ce"
 
-"@types/react-dom@^16.0.11":
-  version "16.0.11"
-  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/@types/react-dom/-/react-dom-16.0.11.tgz#bd10ccb0d9260343f4b9a49d4f7a8330a5c1f081"
+"@types/react-dom@16.8.2":
+  version "16.8.2"
+  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/@types/react-dom/-/react-dom-16.8.2.tgz#9bd7d33f908b243ff0692846ef36c81d4941ad12"
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.7.18":
+"@types/react@*":
   version "16.7.18"
   resolved "http://nexus.phoenixit.ru/repository/yarn-registry/@types/react/-/react-16.7.18.tgz#f4ce0d539a893dd61e36cd11ae3a5e54f5a48337"
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@16.8.2":
+  version "16.8.2"
+  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/@types/react/-/react-16.8.2.tgz#3b7a7f7ea89d1c7d68b00849fb5de839011c077b"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2422,23 +2429,23 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.7.0:
-  version "16.7.0"
-  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/react-dom/-/react-dom-16.7.0.tgz#a17b2a7ca89ee7390bc1ed5eb81783c7461748b8"
+react-dom@16.8.2:
+  version "16.8.2"
+  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/react-dom/-/react-dom-16.8.2.tgz#7c8a69545dd554d45d66442230ba04a6a0a3c3d3"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.12.0"
+    scheduler "^0.13.2"
 
-react@^16.7.0:
-  version "16.7.0"
-  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
+react@16.8.2:
+  version "16.8.2"
+  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/react/-/react-16.8.2.tgz#83064596feaa98d9c2857c4deae1848b542c9c0c"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.12.0"
+    scheduler "^0.13.2"
 
 "readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.4, readable-stream@^2.0.6, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.6:
   version "2.3.6"
@@ -2625,9 +2632,9 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "http://nexus.phoenixit.ru/repository/yarn-registry/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-scheduler@^0.12.0:
-  version "0.12.0"
-  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/scheduler/-/scheduler-0.12.0.tgz#8ab17699939c0aedc5a196a657743c496538647b"
+scheduler@^0.13.2:
+  version "0.13.2"
+  resolved "http://nexus.phoenixit.ru/repository/yarn-registry/scheduler/-/scheduler-0.13.2.tgz#969eaee2764a51d2e97b20a60963b2546beff8fa"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
