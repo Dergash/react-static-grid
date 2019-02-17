@@ -23,19 +23,26 @@ const columns: IColumn[] = [
 function Demo() {
     const [ component, setComponent ] = React.useState('Static Layout Grid')
     const items = ['Code Snippet', 'Static Layout Grid']
+    const rows = [
+        ...gridData.data,
+        ...gridData.data,
+        ...gridData.data,
+        ...gridData.data,
+        ...gridData.data
+    ]
     return (
         <div className={styles.Container}>
             <AppBar color="rgb(51, 51, 51)" title="Components" />
             <Navigation items={items} onClick={setComponent} />
             <div className={styles.Content}>
-                <section>
+                <section className={styles.Section}>
                     <h2 className={styles.ComponentTitle}>
                         {component}
                     </h2>
                     { component === 'Code Snippet' && <CodeSnippet code={CodeSnippetSrc} /> }
                     { component === 'Static Layout Grid' && <CodeSnippet code={StaticLayoutGridSrc} /> }
                 </section>
-                <section>
+                <section className={styles.Section}>
                     <h2 className={styles.ComponentTitle}>
                         Result
                     </h2>
@@ -43,7 +50,11 @@ function Demo() {
                         && <CodeSnippet code={DemoSrc} />
                     }
                     { component === 'Static Layout Grid'
-                        && <StaticLayoutGrid columns={columns} rows={gridData.data} />
+                        && <StaticLayoutGrid
+                            columns={columns}
+                            items={rows}
+                            visibleRowsCount={5}
+                        />
                     }
                 </section>
             </div>

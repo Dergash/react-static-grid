@@ -1,0 +1,20 @@
+.Thumb {
+    position: absolute;
+    background-color: #bbb;
+    border-radius: 24px;
+    outline: none;
+}
+
+.Thumb:hover {
+    background-color: #999;
+}
+
+.Horizontal {
+    height: 15px;
+}
+
+.Vertical {
+    width: 15px;
+    right: -18px;
+    top: 0;
+}

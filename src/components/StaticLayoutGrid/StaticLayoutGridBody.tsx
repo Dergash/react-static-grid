@@ -3,14 +3,17 @@ import { IColumn } from './StaticLayoutGridHead'
 import * as styles from './StaticLayoutGridBody.css'
 
 interface IStaticLayoutGridBodyProps {
-    rows: any[],
-    columns: IColumn[]
+    items: any[],
+    columns: IColumn[],
+    visibleRowsCount: number
 }
 
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
 
 function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
+    const firstVisibleRow = React.useRef(0)
+    const visibleItems = props.items.slice(firstVisibleRow.current, firstVisibleRow.current + props.visibleRowsCount)
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>
@@ -27,7 +30,7 @@ function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
                     )}
                 </colgroup>
                 <tbody>
-                    {props.rows.map((row, index) =>
+                    {visibleItems.map((row, index) =>
                         <tr className={styles.Row}>
                             {props.columns.map(column => {
                                 let align
