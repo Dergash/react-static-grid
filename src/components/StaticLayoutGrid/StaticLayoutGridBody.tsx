@@ -5,15 +5,15 @@ import * as styles from './StaticLayoutGridBody.css'
 interface IStaticLayoutGridBodyProps {
     items: any[],
     columns: IColumn[],
-    visibleRowsCount: number
+    visibleRowsCount: number,
+    firstVisibleRow: number
 }
 
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
 
 function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
-    const firstVisibleRow = React.useRef(0)
-    const visibleItems = props.items.slice(firstVisibleRow.current, firstVisibleRow.current + props.visibleRowsCount)
+    const visibleItems = props.items.slice(props.firstVisibleRow, props.firstVisibleRow + props.visibleRowsCount)
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ScrollBar from './ScrollBar'
+import ScrollBar, { ScrollEvent, IMouseScrollEvent } from './ScrollBar'
 import * as styles from './Scrollable.css'
 
 interface IScrollableProps {
@@ -7,7 +7,8 @@ interface IScrollableProps {
     width: number,
     scrollableWidth: number,
     height: number,
-    scrollableHeight: number
+    scrollableHeight: number,
+    onScroll?: (event: IMouseScrollEvent) => void
 }
 
 const defaultThumbThickness = 15
@@ -20,12 +21,14 @@ function Scrollable(props: IScrollableProps) {
                 <ScrollBar
                     axis="x"
                     size={getThumbSize(props.width, props.scrollableWidth)}
+                    onScroll={props.onScroll}
                 />
             }
             { props.scrollableHeight > props.height &&
                 <ScrollBar
                     axis="y"
                     size={getThumbSize(props.height, props.scrollableHeight)}
+                    onScroll={props.onScroll}
                 />
             }
         </section>
