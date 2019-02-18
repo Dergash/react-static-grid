@@ -3,7 +3,6 @@
     background-color: #1e1e1e;
     color: #d4d4d4;
     overflow: auto;
-    max-height: 400px; /* TODO: customize */
 }
 
 .Line {
@@ -26,6 +25,10 @@
 .LineCode::selection {
     /* Chrome meddle with color when alpha channel > 255/256 */
     background-color: rgba(38, 79, 120, 0.996);
+
+    & > span {
+        background-color: rgba(38, 79, 120, 0.996);
+    }
 }
 
 .Control {

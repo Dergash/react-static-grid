@@ -1,0 +1,12 @@
+.Controls {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 8px;
+
+    
+}
+
+.Controls input {
+    float: right;       
+}
