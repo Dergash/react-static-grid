@@ -16,7 +16,7 @@ function CodeSnippet(props: ICodeSnippetProps) {
             { lines
             .filter((line, index) => (index === lines.length - 1 && !line) === false)
             .map((line, index) =>
-                <div className={styles.Line}>
+                <div key={index} className={styles.Line}>
                     <div className={styles.LineNumber} style={lineNumberWidth}>
                         {index}
                     </div>
@@ -35,21 +35,21 @@ function getLineNumberWidth(lines: number) {
 
 function renderLine(line: string) {
     const tokens = splitLineToTokens(line)
-    return tokens.map(token => {
+    return tokens.map((token, index) => {
         if (token.type === 'entity') {
-            return <span className={styles.Entity}>{token.text}</span>
+            return <span key={index} className={styles.Entity}>{token.text}</span>
         }
         if (token.type === 'control') {
-            return <span className={styles.Control}>{token.text}</span>
+            return <span key={index} className={styles.Control}>{token.text}</span>
         }
         if (token.type === 'string') {
-            return <span className={styles.String}>{token.text}</span>
+            return <span key={index} className={styles.String}>{token.text}</span>
         }
         if (token.type === 'comment') {
-            return <span className={styles.Comment}>{token.text}</span>
+            return <span key={index} className={styles.Comment}>{token.text}</span>
         }
         if (token.type === 'string') {
-            return <span className={styles.String}>{token.text}</span>
+            return <span key={index} className={styles.String}>{token.text}</span>
         }
         return token.text
     })

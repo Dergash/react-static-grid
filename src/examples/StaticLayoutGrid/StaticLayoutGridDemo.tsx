@@ -64,6 +64,7 @@ function cellRenderer(props: ICell) {
     align = props.column.align === 'center' ? alignCenter : align
     align = props.column.align === 'right' ? alignRight : align
     return <td
+        key={props.column.key + props.rowIndex}
         className={cn(styles.Cell, { [styles.Index]: props.column.type === 'index' })}
         style={{
             borderTop: props.rowIndex === 0 ? 'none' : undefined,

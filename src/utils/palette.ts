@@ -22,7 +22,7 @@ export function shade(primaryColor: string, overlayColor: string, opacity: numbe
         throw Error('Incorrect color conversion; #ffffff format expected')
     }
     const { r: primaryR, g: primaryG, b: primaryB } = hexToRgb(primaryColor)
-    const { r: overlayR, g: overlayG, b: overlayB } = hexToRgb(overlayColor) 
+    const { r: overlayR, g: overlayG, b: overlayB } = hexToRgb(overlayColor)
     const r = linearInterpolation(primaryR, overlayR, opacity)
     const g = linearInterpolation(primaryG, overlayG, opacity)
     const b = linearInterpolation(primaryB, overlayB, opacity)
@@ -30,7 +30,7 @@ export function shade(primaryColor: string, overlayColor: string, opacity: numbe
 }
 
 function hexToRgb(hex: string) {
-    return { 
+    return {
         r: Number.parseInt(`${hex[1] + hex[2]}`, 16),
         g: Number.parseInt(`${hex[3] + hex[4]}`, 16),
         b: Number.parseInt(`${hex[5] + hex[6]}`, 16)

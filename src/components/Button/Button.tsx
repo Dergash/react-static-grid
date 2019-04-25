@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {EColors} from 'utils/palette' // shade
+import {EColors, shade} from 'utils/palette'
 import cn from 'utils/cn'
 import * as styles from './Button.css'
 
@@ -30,12 +30,12 @@ const Button = (props: IButtonProps) => {
         ...props.style
     }
     const [style, setStyle] = React.useState(initialStyle)
-    const hoverColor = '0' // shade(primaryColor, secondaryColor, 0.08)
+    const hoverColor = shade(primaryColor, secondaryColor, 0.08)
 
     // TODO: JSS support required for pseudo selectors inlining
     const handleMouseEnter = () => setStyle({ ...style, backgroundColor: hoverColor })
     const handleMouseLeave = () => setStyle(initialStyle)
- 
+
     return <button
         className={cn(styles.Button, props.className)}
         style={style}
