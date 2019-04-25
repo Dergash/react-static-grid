@@ -79,7 +79,7 @@ function ScrollBar(props: IScrollBarProps) {
 
 function handleMove(event: MouseEvent, instance: IScrollBarInstance, props: IScrollBarProps) {
     const anchorDelta = (props.size * instance.anchorPercentage)
-    const positionPx = props.axis === 'x' ? event.clientX : event.clientY - anchorDelta
+    const positionPx = (props.axis === 'x' ? event.clientX : event.clientY) - anchorDelta
     const availablePx = (instance.maxPosition - instance.minPosition)
     const percentage = (positionPx - instance.minPosition) / availablePx
     const limitedPercentage = percentage < 0

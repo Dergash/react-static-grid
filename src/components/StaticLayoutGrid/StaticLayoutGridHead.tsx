@@ -1,26 +1,37 @@
 import * as React from 'react'
 import * as styles from './StaticLayoutGridHead.css'
 
+export interface ICell {
+    value: any,
+    column: IColumn,
+    rowIndex: number
+}
+
 export interface IColumn {
     key: string,
     label?: string,
     width?: number,
-    align?: 'left' | 'center' | 'right'
+    align?: 'left' | 'center' | 'right',
+    renderer: (props: any) => JSX.Element,
+    [customProperty: string]: any
 }
 
 interface IStaticLayoutGridHeadProps {
-    columns: IColumn[]
+    columns: IColumn[],
+    firstVisibleColumn: number,
+    visibleColumnsCount: number
 }
 
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
 
 function StaticLayoutGridHead(props: IStaticLayoutGridHeadProps) {
+    const visibleColumns = props.columns.slice(props.firstVisibleColumn, props.firstVisibleColumn + props.visibleColumnsCount)
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>
                 <colgroup>
-                    {props.columns.map(column =>
+                    {visibleColumns.map(column =>
                         <col
                             key={column.key}
                             style={{
@@ -33,7 +44,7 @@ function StaticLayoutGridHead(props: IStaticLayoutGridHeadProps) {
                 </colgroup>
                 <thead>
                     <tr className={styles.Row}>
-                        {props.columns.map((column, index) => {
+                        {visibleColumns.map((column, index) => {
                             let align
                             align = column.align === 'center' ? alignCenter : align
                             align = column.align === 'right' ? alignRight : align

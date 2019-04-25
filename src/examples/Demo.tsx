@@ -21,19 +21,21 @@ function Demo() {
                     <h2 className={styles.ComponentTitle}>
                         {component}
                     </h2>
-                    { component === 'Code Snippet' && <CodeSnippet code={CodeSnippetSrc} /> }
-                    { component === 'Static Layout Grid' && <CodeSnippet code={StaticLayoutGridSrc} /> }
                 </section>
                 <section className={styles.Section}>
-                    <h2 className={styles.ComponentTitle}>
-                        Result
-                    </h2>
                     { component === 'Code Snippet'
                         && <CodeSnippet code={DemoSrc} />
                     }
                     { component === 'Static Layout Grid'
                         && <StaticLayoutGridDemo  />
                     }
+                </section>
+                <section>
+                    <h2 className={styles.ComponentTitle}>
+                        Source
+                    </h2>
+                    { component === 'Code Snippet' && <CodeSnippet code={CodeSnippetSrc} /> }
+                    { component === 'Static Layout Grid' && <CodeSnippet code={StaticLayoutGridSrc} /> }
                 </section>
             </div>
         </div>

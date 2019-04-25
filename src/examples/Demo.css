@@ -28,20 +28,10 @@ body {
 }
 
 .Content {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-column-gap: 36px;
     margin-left: 24px;
     margin-right: 24px;
-    /*overflow: auto;*/
-}
-
-@media screen and (min-width: 600px) {
-    .Content {
-        grid-template-columns: 1fr 1fr;
-    }
 }
 
 .Section {
-    max-height: 400px;
+
 }

@@ -1,24 +1,25 @@
 import * as React from 'react'
 import { IColumn } from './StaticLayoutGridHead'
+import cn from 'utils/cn'
 import * as styles from './StaticLayoutGridBody.css'
 
 interface IStaticLayoutGridBodyProps {
     items: any[],
     columns: IColumn[],
     visibleRowsCount: number,
-    firstVisibleRow: number
+    visibleColumnsCount: number,
+    firstVisibleRow: number,
+    firstVisibleColumn: number
 }
-
-const alignCenter = { textAlign: 'center' }
-const alignRight = { textAlign: 'right' }
 
 function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
     const visibleItems = props.items.slice(props.firstVisibleRow, props.firstVisibleRow + props.visibleRowsCount)
+    const visibleColumns = props.columns.slice(props.firstVisibleColumn, props.firstVisibleColumn + props.visibleColumnsCount)
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>
                 <colgroup>
-                    {props.columns.map(column =>
+                    {visibleColumns.map(column =>
                         <col
                             key={column.key}
                             style={{
@@ -31,19 +32,9 @@ function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
                 </colgroup>
                 <tbody>
                     {visibleItems.map((row, index) =>
-                        <tr className={styles.Row}>
-                            {props.columns.map(column => {
-                                let align
-                                align = column.align === 'center' ? alignCenter : align
-                                align = column.align === 'right' ? alignRight : align
-                                return <td
-                                    className={styles.Cell}
-                                    style={{ borderTop: index === 0 ? 'none' : undefined }}
-                                >
-                                    <span className={styles.Label} style={align}>
-                                        {row[column.key]}
-                                    </span>
-                                </td>
+                        <tr className={styles.Row} key={index}>
+                            {visibleColumns.map((column, cIndex) => {
+                                return column.renderer({ value: row[column.key], column, rowIndex: index })
                             })}
                         </tr>
                     )}
