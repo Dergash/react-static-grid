@@ -26,7 +26,10 @@ const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
 
 function StaticLayoutGridHead(props: IStaticLayoutGridHeadProps) {
-    const visibleColumns = props.columns.slice(props.firstVisibleColumn, props.firstVisibleColumn + props.visibleColumnsCount)
+    const visibleColumns = props.columns.slice(
+        props.firstVisibleColumn,
+        props.firstVisibleColumn + props.visibleColumnsCount
+    )
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>

@@ -40,19 +40,19 @@ function StaticLayoutGrid(props: IStaticLayoutGridProps) {
     const container = React.useRef<HTMLDivElement>(null)
     const contentWidth = columns.reduce((width, item) => width + (item.width || 0), 0)
     React.useLayoutEffect(() => {
-        let rightWidth = 0
+        let localRightWidth = 0
         let pek = containerWidth
         let maxFirstVisibleColumn = columns.length - 1
         while (maxFirstVisibleColumn > 0) {
             pek -= columns[maxFirstVisibleColumn].width
-            rightWidth += columns[maxFirstVisibleColumn].width
+            localRightWidth += columns[maxFirstVisibleColumn].width
             maxFirstVisibleColumn--
             if (pek - columns[maxFirstVisibleColumn].width < 0) {
                 break
             }
         }
         setContainerWidth(container.current ? container.current.clientWidth : 0)
-        setRightWidth(rightWidth)
+        setRightWidth(localRightWidth)
     }, [container.current && container.current.clientWidth])
 
     const requiredContainerHeight = Math.min(props.items.length, props.visibleRowsCount) * rowHeight

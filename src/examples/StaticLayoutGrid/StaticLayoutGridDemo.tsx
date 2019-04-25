@@ -33,7 +33,7 @@ enum EColors {
 
 const colors = [ EColors.green, EColors.indigo, EColors.blue, EColors.blueGrey, EColors.brown, EColors.deepOrange ]
 
-for (let i = 'A'.charCodeAt(0); i < 'Z'.charCodeAt(0); i++) {
+for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
     const colorIndex = Math.floor(Math.random() * colors.length)
     columns.push({
         key: String.fromCharCode(i),
@@ -44,11 +44,10 @@ for (let i = 'A'.charCodeAt(0); i < 'Z'.charCodeAt(0); i++) {
 }
 
 data.forEach(item => {
-    for (let i = 'A'.charCodeAt(0); i < 'Z'.charCodeAt(0); i++) {
+    for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
         item[String.fromCharCode(i)] = Math.random()
     }
 })
-
 
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }

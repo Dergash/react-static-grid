@@ -14,7 +14,10 @@ interface IStaticLayoutGridBodyProps {
 
 function StaticLayoutGridBody(props: IStaticLayoutGridBodyProps) {
     const visibleItems = props.items.slice(props.firstVisibleRow, props.firstVisibleRow + props.visibleRowsCount)
-    const visibleColumns = props.columns.slice(props.firstVisibleColumn, props.firstVisibleColumn + props.visibleColumnsCount)
+    const visibleColumns = props.columns.slice(
+        props.firstVisibleColumn,
+        props.firstVisibleColumn + props.visibleColumnsCount
+    )
     return (
         <div className={styles.Container}>
             <table className={styles.Table}>
