@@ -1,3 +1,4 @@
 .Container {
     margin-bottom: 15px;
+    touch-action: none;
 }

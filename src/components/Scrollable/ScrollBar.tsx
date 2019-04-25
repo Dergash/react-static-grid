@@ -55,31 +55,56 @@ function ScrollBar(props: IScrollBarProps) {
         setPosition(props.initial, instance, props)
     }, [props.initial, props.size])
     const handleMouseMove = React.useCallback((event: MouseEvent) => {
-        handleMove(event, instance, props)
+        handleMove(props.axis === 'x' ? event.clientX : event.clientY, instance, props)
     }, [props])
     const handleMouseUp = (event: MouseEvent) => {
         toggleBrowserSelection(false)
         window.removeEventListener('mousemove', handleMouseMove, true)
     }
+    const handleMouseDown = React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+        toggleBrowserSelection(true)
+        const container = event.currentTarget.parentElement
+        window.addEventListener('mouseup', handleMouseUp, true)
+        window.addEventListener('mousemove', handleMouseMove, true)
+        const dragPosition = props.axis === 'x' ? event.clientX : event.clientY
+        const thumbPositionPx = instance.percentage * (instance.maxPosition - instance.minPosition)
+        instance.anchorPercentage = (dragPosition - instance.minPosition - thumbPositionPx) / props.size
+    }, [props])
+
+    const handleTouchStart = React.useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+        toggleBrowserSelection(true)
+        const container = event.currentTarget.parentElement
+        window.addEventListener('touchend', handleTouchEnd, true)
+        window.addEventListener('touchmove', handleTouchMove, true)
+        const dragPosition = props.axis === 'x' ? event.targetTouches[0].clientX : event.targetTouches[0].clientY
+        const thumbPositionPx = instance.percentage * (instance.maxPosition - instance.minPosition)
+        instance.anchorPercentage = (dragPosition - instance.minPosition - thumbPositionPx) / props.size
+    }, [props])
+
+    const handleTouchEnd = React.useCallback(() => {
+        toggleBrowserSelection(false)
+        window.removeEventListener('touchmove', handleTouchMove, true)
+    }, [props])
+
+    const handleTouchMove = React.useCallback((event: TouchEvent) => {
+        event.preventDefault()
+        const eventPosition = props.axis === 'x' ? event.targetTouches[0].clientX : event.targetTouches[0].clientY
+        handleMove(eventPosition, instance, props)
+    }, [props])
+
     return <div
         ref={instance.thumb}
         className={thumbStyle}
         style={{ [props.axis === 'x' ? 'width' : 'height']: props.size }}
-        onMouseDown={React.useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-            toggleBrowserSelection(true)
-            const container = event.currentTarget.parentElement
-            window.addEventListener('mouseup', handleMouseUp, true)
-            window.addEventListener('mousemove', handleMouseMove, true)
-            const dragPosition = props.axis === 'x' ? event.clientX : event.clientY
-            const thumbPositionPx = instance.percentage * (instance.maxPosition - instance.minPosition)
-            instance.anchorPercentage = (dragPosition - instance.minPosition - thumbPositionPx) / props.size
-        }, [props])}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+
     />
 }
 
-function handleMove(event: MouseEvent, instance: IScrollBarInstance, props: IScrollBarProps) {
+function handleMove(eventPosition: number, instance: IScrollBarInstance, props: IScrollBarProps) {
     const anchorDelta = (props.size * instance.anchorPercentage)
-    const positionPx = (props.axis === 'x' ? event.clientX : event.clientY) - anchorDelta
+    const positionPx = eventPosition - anchorDelta
     const availablePx = (instance.maxPosition - instance.minPosition)
     const percentage = (positionPx - instance.minPosition) / availablePx
     const limitedPercentage = percentage < 0

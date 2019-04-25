@@ -3,6 +3,7 @@
     background-color: #bbb;
     border-radius: 24px;
     outline: none;
+    touch-action: none;
 }
 
 .Thumb:hover {
