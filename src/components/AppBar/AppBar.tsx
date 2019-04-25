@@ -15,9 +15,9 @@ function AppBar(props: IAppBarProps) {
             style={{ backgroundColor: props.color || 'transparent'}}
         >
             <FontAwesomeIcon icon={faBars} className={styles.Navigation} />
-            <h1 className={styles.Title}>
+            <h6 className={styles.Title}>
                 {props.title}
-            </h1>
+            </h6>
         </header>
     )
 }

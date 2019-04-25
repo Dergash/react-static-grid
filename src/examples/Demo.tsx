@@ -18,9 +18,9 @@ function Demo() {
             <Navigation items={items} onClick={setComponent} />
             <div className={styles.Content}>
                 <section className={styles.Section}>
-                    <h2 className={styles.ComponentTitle}>
+                    <h4 className={styles.ComponentTitle}>
                         {component}
-                    </h2>
+                    </h4>
                 </section>
                 <section className={styles.Section}>
                     { component === 'Code Snippet'
@@ -31,9 +31,9 @@ function Demo() {
                     }
                 </section>
                 <section>
-                    <h2 className={styles.ComponentTitle}>
+                    <h4 className={styles.ComponentTitle}>
                         Source
-                    </h2>
+                    </h4>
                     { component === 'Code Snippet' && <CodeSnippet code={CodeSnippetSrc} /> }
                     { component === 'Static Layout Grid' && <CodeSnippet code={StaticLayoutGridSrc} /> }
                 </section>
