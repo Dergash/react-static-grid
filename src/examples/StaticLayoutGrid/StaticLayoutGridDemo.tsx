@@ -1,9 +1,11 @@
 import * as React from 'react'
 import StaticLayoutGrid from 'components/StaticLayoutGrid/StaticLayoutGrid'
 import { IColumn, ICell } from 'components/StaticLayoutGrid/StaticLayoutGridHead'
+import Button from 'components/Button/Button'
 import * as gridData from 'examples/data/responsiveBreakpoints.json'
 import * as styles from './StaticLayoutGridDemo.css'
 import cn from 'utils/cn'
+import {EColors} from 'utils/palette'
 
 interface IDataItem {
     [key: string]: any
@@ -11,70 +13,24 @@ interface IDataItem {
 
 const data = gridData.data as IDataItem[]
 
-const columns: IColumn[] = [
-    {
-        key: '#',
-        align: 'right',
-        width: 50,
-        renderer: cellRenderer
-    }
-]
-
-enum EColors {
-    green = '#4CAF50',
-    indigo = '#3F51B5',
-    deepOrange = '#FF5722',
-    pink = '#E91E63',
-    blueGrey = '#607D8B',
-    blue = '#1565C0',
-    brown = '#795548',
-    grey = '#9E9E9E'
-}
-
 const colors = [ EColors.green, EColors.indigo, EColors.blue, EColors.blueGrey, EColors.brown, EColors.deepOrange ]
-
-for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
-    const colorIndex = Math.floor(Math.random() * colors.length)
-    columns.push({
-        key: String.fromCharCode(i),
-        width: 150,
-        renderer: cellRenderer,
-        backgroundColor: i % 2 ? undefined : colors[colorIndex]
-    })
-}
-
-data.forEach(item => {
-    for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
-        item[String.fromCharCode(i)] = Math.random()
-    }
-})
-
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
-
-function cellRenderer(props: ICell) {
-    let align
-    align = props.column.align === 'center' ? alignCenter : align
-    align = props.column.align === 'right' ? alignRight : align
-    return <td
-        className={cn(styles.Cell, { [styles.Index]: props.column.key === columns[0].key })}
-        style={{
-            borderTop: props.rowIndex === 0 ? 'none' : undefined,
-            backgroundColor: props.column.backgroundColor
-        }}
-    >
-        <span className={styles.Label} style={align}>
-            {props.value}
-        </span>
-    </td>
-}
 
 function StaticLayoutGridDemo() {
     const [rows, setRows] = React.useState(100)
     const [visibleRows, setVisibleRows] = React.useState(14)
+    const [columns, setColumns] = React.useState(getRandomizedColumns())
+    const [randomizedData, setRandomizedData] = React.useState(getRandomizedData())
+
+    const handleRandomize = React.useCallback(() => {
+        setColumns(getRandomizedColumns())
+        setRandomizedData(getRandomizedData())
+    }, [])
+
     let items: IDataItem[] = []
     for (let i = 0; i < Math.ceil(rows / data.length); i++) {
-        items = [ ...items, ...data ]
+        items = [ ...items, ...randomizedData ]
     }
     items = items.slice(0, rows).map((item, index) => ({ ...item, '#': index }))
     const handleRowsChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +41,9 @@ function StaticLayoutGridDemo() {
     }, [])
     return <section>
         <div className={styles.Controls}>
+            <Button onClick={handleRandomize} className={styles.Button}>
+                Randomize
+            </Button>
             <span>
                 Rows: <input maxLength={5} value={rows} onChange={handleRowsChange} />
             </span>
@@ -98,6 +57,56 @@ function StaticLayoutGridDemo() {
             visibleRowsCount={visibleRows}
         />
     </section>
+}
+
+function cellRenderer(props: ICell) {
+    let align
+    align = props.column.align === 'center' ? alignCenter : align
+    align = props.column.align === 'right' ? alignRight : align
+    return <td
+        className={cn(styles.Cell, { [styles.Index]: props.column.type === 'index' })}
+        style={{
+            borderTop: props.rowIndex === 0 ? 'none' : undefined,
+            backgroundColor: props.column.backgroundColor
+        }}
+    >
+        <span className={styles.Label} style={align}>
+            {props.value}
+        </span>
+    </td>
+}
+
+function getRandomizedColumns() {
+    const result: IColumn[] = [
+        {
+            key: '#',
+            align: 'right',
+            width: 50,
+            type: 'index',
+            renderer: cellRenderer
+        }
+    ]
+    for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
+        const colorIndex = Math.floor(Math.random() * colors.length)
+        result.push({
+            key: String.fromCharCode(i),
+            type: 'number',
+            width: 150,
+            renderer: cellRenderer,
+            backgroundColor: i % 2 ? undefined : colors[colorIndex]
+        })
+    }
+    return result
+}
+
+function getRandomizedData() {
+    const result = [ ...data ]
+    result.forEach(item => {
+        for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
+            item[String.fromCharCode(i)] = Math.random()
+        }
+    })
+    return result
 }
 
 export default StaticLayoutGridDemo

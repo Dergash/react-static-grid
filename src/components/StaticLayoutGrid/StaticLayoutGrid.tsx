@@ -29,6 +29,10 @@ function getFirstVisibleCount(percentage: number, totalWidth: number, columns: I
 
 function StaticLayoutGrid(props: IStaticLayoutGridProps) {
     const [columns, setColumns] = React.useState(props.columns)
+    React.useEffect(() => {
+        setColumns(props.columns)
+    }, [props.columns])
+
     const [firstVisibleRow, setFirstVisibleRow] = React.useState(0)
     const [firstVisibleColumn, setFirstVisibleColumn] = React.useState(0)
     const [initialY, setInitialY] = React.useState(0)

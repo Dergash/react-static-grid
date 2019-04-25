@@ -1,10 +1,7 @@
 .Controls {
     display: flex;
-    flex-direction: column;
-    width: 300px;
+    align-items: center;
     padding: 8px;
-
-    
 }
 
 .Controls input {
@@ -30,4 +27,8 @@
 .Index {
     padding-left: 0px;
     padding-right: 8px;
+}
+
+.Button {
+    margin-right: 12px;
 }
