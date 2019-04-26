@@ -14,7 +14,10 @@ interface IDataItem {
 
 const data = gridData.data as IDataItem[]
 
-const colors = [ EColors.green, EColors.indigo, EColors.blue, EColors.blueGrey, EColors.brown, EColors.deepOrange ]
+const colors = [
+    EColors.green, EColors.indigo, EColors.blue, EColors.blueGrey, EColors.brown,
+    EColors.deepOrange, EColors.red
+]
 const alignCenter = { textAlign: 'center' }
 const alignRight = { textAlign: 'right' }
 
@@ -42,10 +45,16 @@ function StaticLayoutGridDemo() {
     }, [])
     return <section>
         <div className={styles.Controls}>
+            <TextField
+                className={styles.TextField}
+                label="Rows"
+                maxLength={5}
+                value={rows}
+                onChange={handleRowsChange}
+            />
             <Button onClick={handleRandomize} className={styles.Button}>
                 Randomize
             </Button>
-            <TextField label="Rows" maxLength={5} value={rows} onChange={handleRowsChange} /> 
             {/*<span>
                 Visible Rows: <input value={visibleRows} onChange={handleVisibleRowsChange} />
             </span>*/}
@@ -91,7 +100,7 @@ function getRandomizedColumns() {
         result.push({
             key: String.fromCharCode(i),
             type: 'number',
-            width: 150,
+            width: 120,
             renderer: cellRenderer,
             backgroundColor: i % 2 ? undefined : colors[colorIndex]
         })

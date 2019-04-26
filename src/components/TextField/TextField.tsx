@@ -1,6 +1,6 @@
 import * as React from 'react'
 import cn from 'utils/cn'
-import { EColors, theme, shade } from 'utils/palette' 
+import { EColors, theme, shade } from 'utils/palette'
 import * as styles from './TextField.css'
 
 interface ITextFieldProps {
@@ -10,7 +10,8 @@ interface ITextFieldProps {
     label?: string,
     type?: 'transparent' | 'filled' | 'outlined',
     primaryColor?: EColors | string,
-    secondaryColor?: EColors | string
+    secondaryColor?: EColors | string,
+    className?: string,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -18,15 +19,15 @@ function TextField(props: ITextFieldProps) {
     const [focused, setFocused] = React.useState(props.focused)
     const type = props.type || 'transparent'
     const primaryColor = props.primaryColor || theme.primaryColor
-    const borderColor = shade(theme.surfaceColor, props.secondaryColor || theme.seconaryColor, 0.7)
+    const borderColor = shade(theme.surfaceColor, props.secondaryColor || theme.secondaryColor, 0.7)
     const containerStyle = {
         backgroundColor: type === 'filled'
-            ? shade(theme.surfaceColor, props.secondaryColor || theme.seconaryColor, 0.04)
+            ? shade(theme.surfaceColor, props.secondaryColor || theme.secondaryColor, 0.04)
             : undefined,
         borderColor
     }
     const style = {
-        color: props.secondaryColor || theme.seconaryColor,
+        color: props.secondaryColor || theme.secondaryColor,
     }
 
     const handleFocus = () => {
@@ -35,11 +36,11 @@ function TextField(props: ITextFieldProps) {
 
     const handleBlur = () => {
         setFocused(false)
-    } 
+    }
 
     const value = props.value === null ? '' : props.value
     return <div
-        className={styles.Container}
+        className={cn(styles.Container, props.className)}
         style={containerStyle}
     >
         { props.label &&

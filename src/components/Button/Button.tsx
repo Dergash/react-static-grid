@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {EColors, shade} from 'utils/palette'
+import {EColors, shade, theme} from 'utils/palette'
 import cn from 'utils/cn'
 import * as styles from './Button.css'
 
@@ -21,8 +21,8 @@ interface IButtonProps {
 }
 
 const Button = (props: IButtonProps) => {
-    const primaryColor = props.primaryColor || EColors.lightBlue // Theme context?
-    const secondaryColor = props.secondaryColor || EColors.white
+    const primaryColor = props.primaryColor || theme.primaryColor
+    const secondaryColor = props.secondaryColor || theme.secondaryColor
     const buttonType = props.type || ButtonTypes.contained
     const initialStyle = {
         backgroundColor: buttonType === ButtonTypes.contained ? primaryColor : 'transparent',

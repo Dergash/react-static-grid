@@ -1,13 +1,29 @@
 .Controls {
-    display: flex;
     align-items: flex-end;
-    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
     padding-bottom: 8px;
 }
 
 .Controls input {
     float: right;       
 }
+
+@media screen and (max-width: 600px) {
+    .Controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .TextField {
+        width: 100%;
+    }
+
+    .Button {
+        margin-top: 8px;
+    }
+}
+
 
 .Cell {
     text-align: left;
@@ -28,8 +44,4 @@
 .Index {
     padding-left: 0px;
     padding-right: 8px;
-}
-
-.Button {
-    margin-right: 12px;
 }

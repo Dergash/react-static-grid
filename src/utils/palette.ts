@@ -1,20 +1,28 @@
 export enum EColors {
     white = '#FFFFFF',
-    green = '#4CAF50',
+    red = '#EF5350', // 400
     indigo = '#3F51B5',
     deepOrange = '#FF5722',
+    purple = '#9C27B0',
+    deepPurple = '#673AB7',
     pink = '#E91E63',
     blueGrey = '#607D8B',
+    blueGrey400 = '#78909C',
+    blueGrey600 = '#546E7A',
+    blueGrey700 = '#455A64',
     blue = '#1F75D1',
     lightBlue = '#2695F3',
+    green = '#4CAF50',
+    lightGreen = '#8BC34A',
     brown = '#795548',
     grey = '#9E9E9E',
     darkGrey = '#252526'
 }
 
+// Theme context?
 export const theme = {
-    primaryColor: EColors.lightBlue,
-    seconaryColor: EColors.white,
+    primaryColor: EColors.blueGrey,
+    secondaryColor: EColors.white,
     backgroundColor: EColors.darkGrey,
     surfaceColor: EColors.darkGrey
 }
