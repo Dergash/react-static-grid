@@ -2,6 +2,7 @@ import * as React from 'react'
 import StaticLayoutGrid from 'components/StaticLayoutGrid/StaticLayoutGrid'
 import { IColumn, ICell } from 'components/StaticLayoutGrid/StaticLayoutGridHead'
 import Button from 'components/Button/Button'
+import TextField from 'components/TextField/TextField'
 import * as gridData from 'examples/data/responsiveBreakpoints.json'
 import * as styles from './StaticLayoutGridDemo.css'
 import cn from 'utils/cn'
@@ -29,12 +30,12 @@ function StaticLayoutGridDemo() {
     }, [])
 
     let items: IDataItem[] = []
-    for (let i = 0; i < Math.ceil(rows / data.length); i++) {
+    for (let i = 0; i < Math.ceil((rows || 0) / data.length); i++) {
         items = [ ...items, ...randomizedData ]
     }
-    items = items.slice(0, rows).map((item, index) => ({ ...item, '#': index }))
+    items = items.slice(0, (rows || 0)).map((item, index) => ({ ...item, '#': index }))
     const handleRowsChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setRows(Number.parseInt(event.target.value, 10) || 0)
+        setRows(Number.parseInt(event.target.value, 10) || null)
     }, [])
     const handleVisibleRowsChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setVisibleRows(Number.parseInt(event.target.value, 10) || 0)
@@ -44,9 +45,7 @@ function StaticLayoutGridDemo() {
             <Button onClick={handleRandomize} className={styles.Button}>
                 Randomize
             </Button>
-            <span>
-                Rows: <input maxLength={5} value={rows} onChange={handleRowsChange} />
-            </span>
+            <TextField label="Rows" maxLength={5} value={rows} onChange={handleRowsChange} /> 
             {/*<span>
                 Visible Rows: <input value={visibleRows} onChange={handleVisibleRowsChange} />
             </span>*/}

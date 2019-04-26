@@ -1,7 +1,8 @@
 .Controls {
     display: flex;
-    align-items: center;
-    padding: 8px;
+    align-items: flex-end;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .Controls input {

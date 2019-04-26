@@ -8,7 +8,15 @@ export enum EColors {
     blue = '#1F75D1',
     lightBlue = '#2695F3',
     brown = '#795548',
-    grey = '#9E9E9E'
+    grey = '#9E9E9E',
+    darkGrey = '#252526'
+}
+
+export const theme = {
+    primaryColor: EColors.lightBlue,
+    seconaryColor: EColors.white,
+    backgroundColor: EColors.darkGrey,
+    surfaceColor: EColors.darkGrey
 }
 
 /**
