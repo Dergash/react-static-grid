@@ -1,7 +1,7 @@
 import * as React from 'react'
-import cn from 'utils/cn'
-import { EColors, theme, shade } from 'utils/palette'
-import * as styles from './TextField.css'
+import cn from '../../utils/cn'
+import { EColors, theme, shade } from '../../utils/palette'
+import styles from './TextField.module.css'
 
 interface ITextFieldProps {
     focused?: boolean,
@@ -40,7 +40,7 @@ function TextField(props: ITextFieldProps) {
 
     const value = props.value === null ? '' : props.value
     return <div
-        className={cn(styles.Container, props.className)}
+        className={cn(styles.Container, props.className ?? '')}
         style={containerStyle}
     >
         { props.label &&

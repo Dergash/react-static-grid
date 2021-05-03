@@ -1,7 +1,6 @@
 .Controls {
     align-items: flex-end;
     display: flex;
-    justify-content: space-between;
     padding-bottom: 8px;
 }
 
@@ -44,4 +43,13 @@
 .Index {
     padding-left: 0px;
     padding-right: 8px;
+}
+
+.Button {
+    margin-right: 8px;
+    min-width: 100px;
+}
+
+.TextField {
+    margin-right: 16px;
 }

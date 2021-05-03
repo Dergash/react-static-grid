@@ -1,12 +1,12 @@
 import * as React from 'react'
-import StaticLayoutGrid from 'components/StaticLayoutGrid/StaticLayoutGrid'
-import { IColumn, ICell } from 'components/StaticLayoutGrid/StaticLayoutGridHead'
-import Button from 'components/Button/Button'
-import TextField from 'components/TextField/TextField'
-import * as gridData from 'examples/data/responsiveBreakpoints.json'
-import * as styles from './StaticLayoutGridDemo.css'
-import cn from 'utils/cn'
-import {EColors} from 'utils/palette'
+import StaticLayoutGrid from '../../components/StaticLayoutGrid/StaticLayoutGrid'
+import { IColumn, ICell } from '../../components/StaticLayoutGrid/StaticLayoutGridHead'
+import Button from '../../components/Button/Button'
+import TextField from '../../components/TextField/TextField'
+import * as gridData from '../data/responsiveBreakpoints.json'
+import styles from './StaticLayoutGridDemo.module.css'
+import cn from '../../utils/cn'
+import {EColors} from '../../utils/palette'
 
 interface IDataItem {
     [key: string]: any
@@ -18,50 +18,52 @@ const colors = [
     EColors.green, EColors.indigo, EColors.blue, EColors.blueGrey, EColors.brown,
     EColors.deepOrange, EColors.red
 ]
-const alignCenter = { textAlign: 'center' }
-const alignRight = { textAlign: 'right' }
+const alignCenter: React.CSSProperties = { textAlign: 'center' }
+const alignRight: React.CSSProperties = { textAlign: 'right' }
+
+const initialRandomizedData = getRandomizedData(100)
 
 function StaticLayoutGridDemo() {
-    const [rows, setRows] = React.useState(100)
+    const [rowsInput, setRowsInput] = React.useState<number | undefined>(100)
+    const [rows, setRows] = React.useState<number | undefined>(100)
     const [visibleRows, setVisibleRows] = React.useState(14)
     const [columns, setColumns] = React.useState(getRandomizedColumns())
-    const [randomizedData, setRandomizedData] = React.useState(getRandomizedData())
+    const [randomizedData, setRandomizedData] = React.useState<IDataItem[]>(initialRandomizedData)
 
     const handleRandomize = React.useCallback(() => {
         setColumns(getRandomizedColumns())
-        setRandomizedData(getRandomizedData())
-    }, [])
+        setRandomizedData(getRandomizedData(rowsInput ?? 0))
+    }, [rowsInput])
 
-    let items: IDataItem[] = []
-    for (let i = 0; i < Math.ceil((rows || 0) / data.length); i++) {
-        items = [ ...items, ...randomizedData ]
-    }
-    items = items.slice(0, (rows || 0)).map((item, index) => ({ ...item, '#': index }))
-    const handleRowsChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setRows(Number.parseInt(event.target.value, 10) || null)
-    }, [])
-    const handleVisibleRowsChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setVisibleRows(Number.parseInt(event.target.value, 10) || 0)
-    }, [])
+    const handleRowsChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number.parseInt(e.currentTarget.value, 10)
+        setRowsInput(Number.isNaN(newValue) ? undefined : newValue)
+    }, [setRows])
+
+    const handleApply = React.useCallback(() => {
+        setRows(rowsInput)
+        setRandomizedData(getRandomizedData(rowsInput ?? 0))
+    }, [rowsInput])
+
     return <section>
         <div className={styles.Controls}>
             <TextField
                 className={styles.TextField}
                 label="Rows"
                 maxLength={5}
-                value={rows}
+                value={rowsInput}
                 onChange={handleRowsChange}
             />
+            <Button onClick={handleApply} className={styles.Button}>
+                Apply
+            </Button>
             <Button onClick={handleRandomize} className={styles.Button}>
                 Randomize
             </Button>
-            {/*<span>
-                Visible Rows: <input value={visibleRows} onChange={handleVisibleRowsChange} />
-            </span>*/}
         </div>
         <StaticLayoutGrid
             columns={columns}
-            items={items}
+            items={randomizedData}
             visibleRowsCount={visibleRows}
         />
     </section>
@@ -89,8 +91,8 @@ function getRandomizedColumns() {
     const result: IColumn[] = [
         {
             key: '#',
-            align: 'right',
-            width: 50,
+            align: 'center',
+            width: 80,
             type: 'index',
             renderer: cellRenderer
         }
@@ -108,14 +110,37 @@ function getRandomizedColumns() {
     return result
 }
 
-function getRandomizedData() {
-    const result = [ ...data ]
-    result.forEach(item => {
-        for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
-            item[String.fromCharCode(i)] = Math.random()
+function getRandomizedData(rows: number) {
+    let result: any[] = []
+    if (rows < 1000) {
+        result = getRandomBatch(rows)
+    } else {
+        const batch = getRandomBatch(1000)
+        const batches = Math.floor(rows / 1000)
+        const leftover = batch.slice(0, rows % 1000)
+        for (let i = 0; i < batches; i++) {
+            result = result.concat(batch)
         }
-    })
+        result = result.concat(leftover)
+    }
+    result = result.map((item, index) => ({ ...item, '#': index }))
     return result
+}
+
+function getRandomBatch(rows: number) {
+    const batch: Record<string, number>[] =[]
+    const row: Record<string, number> = {}
+    for (let i = 'A'.charCodeAt(0); i <= 'Z'.charCodeAt(0); i++) {
+        row[String.fromCharCode(i)] = Math.random()
+    }
+    for (let i = 0; i < rows; i++) {
+        const item = { ...row }
+        Object.keys(item).forEach(key => {
+            item[key] = Math.random()
+        })
+        batch.push(item)
+    }
+    return batch
 }
 
 export default StaticLayoutGridDemo

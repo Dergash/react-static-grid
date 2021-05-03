@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { IColumn } from './StaticLayoutGridHead'
-import cn from 'utils/cn'
-import * as styles from './StaticLayoutGridBody.css'
+import styles from './StaticLayoutGridBody.module.css'
 
 interface IStaticLayoutGridBodyProps {
     items: any[],

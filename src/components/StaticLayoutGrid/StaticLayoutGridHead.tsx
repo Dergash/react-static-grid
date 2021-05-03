@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as styles from './StaticLayoutGridHead.css'
+import styles from './StaticLayoutGridHead.module.css'
 
 export interface ICell {
     value: any,
@@ -22,8 +22,8 @@ interface IStaticLayoutGridHeadProps {
     visibleColumnsCount: number
 }
 
-const alignCenter = { textAlign: 'center' }
-const alignRight = { textAlign: 'right' }
+const alignCenter: React.CSSProperties = { textAlign: 'center' }
+const alignRight: React.CSSProperties = { textAlign: 'right' }
 
 function StaticLayoutGridHead(props: IStaticLayoutGridHeadProps) {
     const visibleColumns = props.columns.slice(

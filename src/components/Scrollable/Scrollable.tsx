@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ScrollBar, { ScrollEvent, IMouseScrollEvent } from './ScrollBar'
-import * as styles from './Scrollable.css'
+import ScrollBar, { IMouseScrollEvent } from './ScrollBar'
+import styles from './Scrollable.module.css'
 
 interface IScrollableProps {
     children: React.ReactNode,
@@ -23,7 +23,7 @@ function Scrollable(props: IScrollableProps) {
             { props.scrollableWidth > props.width &&
                 <ScrollBar
                     axis="x"
-                    initial={props.initialX}
+                    initial={props.initialX ?? 0}
                     size={getThumbSize(props.width, props.scrollableWidth)}
                     onScroll={props.onScroll}
                 />
@@ -31,7 +31,7 @@ function Scrollable(props: IScrollableProps) {
             { props.scrollableHeight > props.height &&
                 <ScrollBar
                     axis="y"
-                    initial={props.initialY}
+                    initial={props.initialY ?? 0}
                     size={getThumbSize(props.height, props.scrollableHeight)}
                     onScroll={props.onScroll}
                 />

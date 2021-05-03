@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Scrollable from 'components/Scrollable/Scrollable'
-import {IMouseScrollEvent} from 'components/Scrollable/ScrollBar'
+import Scrollable from '../Scrollable/Scrollable'
+import {IMouseScrollEvent} from '../Scrollable/ScrollBar'
 import Head, { IColumn } from './StaticLayoutGridHead'
 import Body from './StaticLayoutGridBody'
-import * as styles from './StaticLayoutGrid.css'
+import styles from './StaticLayoutGrid.module.css'
 
 interface IStaticLayoutGridProps {
     columns: IColumn[],
@@ -18,7 +18,7 @@ function getFirstVisibleCount(percentage: number, totalWidth: number, columns: I
     let requiredWidth2 = requiredWidth
     let requiredColumn = 0
     for (let i = 0; i < columns.length; i++) {
-        requiredWidth2 -= columns[i].width
+        requiredWidth2 -= columns[i].width ?? 0
         if (requiredWidth2 < 0) {
             requiredColumn = i
             break
@@ -48,10 +48,10 @@ function StaticLayoutGrid(props: IStaticLayoutGridProps) {
         let pek = containerWidth
         let maxFirstVisibleColumn = columns.length - 1
         while (maxFirstVisibleColumn > 0) {
-            pek -= columns[maxFirstVisibleColumn].width
-            localRightWidth += columns[maxFirstVisibleColumn].width
+            pek -= columns[maxFirstVisibleColumn].width ?? 0
+            localRightWidth += columns[maxFirstVisibleColumn].width ?? 0
             maxFirstVisibleColumn--
-            if (pek - columns[maxFirstVisibleColumn].width < 0) {
+            if (pek - (columns[maxFirstVisibleColumn].width ?? 0) < 0) {
                 break
             }
         }
@@ -96,7 +96,7 @@ function StaticLayoutGrid(props: IStaticLayoutGridProps) {
     let maxColumns = 0
     let requiredWidth = 0
     for (let i = firstVisibleColumn; i < columns.length && requiredWidth < containerWidth; i++) {
-        requiredWidth += columns[i].width
+        requiredWidth += columns[i].width ?? 0
         maxColumns++
     }
     return (

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import {EColors, shade, theme} from 'utils/palette'
-import cn from 'utils/cn'
-import * as styles from './Button.css'
+import {EColors, shade, theme} from '../../utils/palette'
+import cn from '../../utils/cn'
+import styles from './Button.module.css'
 
 enum ButtonTypes {
     text,
@@ -37,7 +37,7 @@ const Button = (props: IButtonProps) => {
     const handleMouseLeave = () => setStyle(initialStyle)
 
     return <button
-        className={cn(styles.Button, props.className)}
+        className={cn(styles.Button, props.className ?? '')}
         style={style}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

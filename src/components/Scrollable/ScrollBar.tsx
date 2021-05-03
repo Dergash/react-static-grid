@@ -1,7 +1,7 @@
 import * as React from 'react'
-import cn from 'utils/cn'
-import {requestIdleCallback} from 'utils/shim'
-import * as styles from './ScrollBar.css'
+import cn from '../../utils/cn'
+import {requestIdleCallback} from '../../utils/shim'
+import styles from './ScrollBar.module.css'
 
 export interface IScrollEventBase { axis: 'x' | 'y' }
 export interface IMouseScrollEvent extends IScrollEventBase {
@@ -24,7 +24,7 @@ interface IScrollBarProps {
 }
 
 interface IScrollBarInstance {
-    thumb: React.MutableRefObject<HTMLDivElement>,
+    thumb: React.RefObject<HTMLDivElement>,
     anchorPercentage: number,
     percentage: number,
     minPosition: number,
@@ -43,7 +43,7 @@ function ScrollBar(props: IScrollBarProps) {
     }).current
     React.useEffect(() => {
         if (instance.thumb.current) {
-            const dimensions = instance.thumb.current.parentElement.getBoundingClientRect()
+            const dimensions = instance.thumb.current.parentElement?.getBoundingClientRect() ?? { left: 0, top: 0, width: 0, height: 0}
             instance.minPosition = props.axis === 'x'
                 ? dimensions.left
                 : dimensions.top
@@ -117,7 +117,7 @@ function handleMove(eventPosition: number, instance: IScrollBarInstance, props: 
         if (props.onScroll) {
             props.onScroll({ axis: props.axis, percentage: limitedPercentage })
         }
-    }, { timeout: 500 })
+    }, { timeout: 30 })
 }
 
 function setPosition(percentage: number, instance: IScrollBarInstance, props: IScrollBarProps) {
@@ -125,14 +125,17 @@ function setPosition(percentage: number, instance: IScrollBarInstance, props: IS
         ? instance.maxPosition - instance.minPosition
         : 0
     instance.percentage = percentage
+    if (!instance.thumb.current) {
+        return
+    }
     instance.thumb.current.style.transform = props.axis === 'x'
             ? `translate3d(${percentage * availablePx}px, 0px, 0px)`
             : `translate3d(0px, ${percentage * availablePx}px, 0px)`
 }
 
 function toggleBrowserSelection(disabled: boolean) {
-    window.document.body.style.userSelect = disabled ? 'none' : null
-    window.document.body.style.msUserSelect = disabled ? 'none' : null
+    window.document.body.style.userSelect = disabled ? 'none' : '';
+    (window.document.body.style as any).msUserSelect = disabled ? 'none' : null
 }
 
 export default ScrollBar
